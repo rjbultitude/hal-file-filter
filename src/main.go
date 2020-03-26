@@ -6,19 +6,44 @@ import (
 	"io/ioutil"
 )
 
+type Request struct {
+	Method string
+	URL    string
+}
+
+type Entry struct {
+	StartedDateTime string
+	Time            float64
+	Request         Request
+}
+
+type Entries struct {
+	Entry Entry
+}
+
+type Creator struct {
+	Name    string
+	Version string
+}
+
+type Log struct {
+	Version string
+	Creator Creator
+	Entries Entries
+}
+
 func main() {
-	// read file
-	data, err := ioutil.ReadFile("test.json")
+	data, err := ioutil.ReadFile("data/homepage.json")
 	if err != nil {
 		fmt.Print(err)
 	}
 
-	type Entry struct {
-		URL string
-	}
-	var entries []Entry
+	var result []Log
+	json.Unmarshal(data, &result)
+	fmt.Println(" Result: ", result)
 
-	// unmarshall it
-	err = json.Unmarshal(data, &entries)
-	fmt.Println("Urls ", entries)
+	var resources []Entries
+
+	err = json.Unmarshal(data, &resources)
+	fmt.Println(" Entries: ", resources)
 }
