@@ -1,4 +1,4 @@
-# HAL file filter
+# HAR file filter
 
 ## Project set up
 

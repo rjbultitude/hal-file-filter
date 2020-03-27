@@ -43,7 +43,7 @@ func MatchString(s string) (matched bool) {
 
 func main() {
 
-	data, err := ioutil.ReadFile("data/test.json")
+	data, err := ioutil.ReadFile("data/homepage.json")
 	if err != nil {
 		fmt.Print(err)
 	}
@@ -54,12 +54,12 @@ func main() {
 	// fmt.Println(" URL: ", resources.Log.Entries[0].Request.URL)
 	// fmt.Println(" results: ", reflect.TypeOf(resources))
 	for i := range resources.Log.Entries {
-		thisURL := resources.Log.Entries[i].Request.URL
+		var thisURL string = resources.Log.Entries[i].Request.URL
 		thisURLNoSSL := MatchString(thisURL)
-		fmt.Println("thisURL ", thisURL)
-		fmt.Println("thisURLNoSSL ", thisURLNoSSL)
+		// fmt.Println("thisURL ", thisURL)
+		// fmt.Println("thisURLNoSSL ", thisURLNoSSL)
 		if thisURLNoSSL == true {
-			fmt.Println(" ", thisURL)
+			fmt.Println("No SSL URL: ", thisURL)
 		}
 	}
 }
