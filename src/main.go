@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"reflect"
 )
 
 type Request struct {
@@ -17,10 +18,6 @@ type Entry struct {
 	Request         Request
 }
 
-type Entries struct {
-	Entry Entry
-}
-
 type Creator struct {
 	Name    string
 	Version string
@@ -29,21 +26,23 @@ type Creator struct {
 type Log struct {
 	Version string
 	Creator Creator
-	Entries Entries
+	Entries []Entry
+}
+
+type Start struct {
+	Log Log
 }
 
 func main() {
-	data, err := ioutil.ReadFile("data/homepage.json")
+
+	data, err := ioutil.ReadFile("data/test.json")
 	if err != nil {
 		fmt.Print(err)
 	}
 
-	var result []Log
-	json.Unmarshal(data, &result)
-	fmt.Println(" Result: ", result)
-
-	var resources []Entries
+	var resources Start
 
 	err = json.Unmarshal(data, &resources)
-	fmt.Println(" Entries: ", resources)
+	fmt.Println(" results: ", resources)
+	fmt.Println(" results: ", reflect.TypeOf(resources))
 }
